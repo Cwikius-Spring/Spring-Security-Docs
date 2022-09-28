@@ -1,4 +1,4 @@
 - CWIKIUS SPRING SECURITY
   - [概要和简介](README.md)
-  - [Spring Security 中文文档](spring-security/index.md)
+  - [Spring Security 中文文档](index.md)
 - [联系我们](CONTACT.md)

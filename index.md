@@ -29,3 +29,5 @@ Spring security 是一个强大的，并且可以高度定制的身份验证和�
 | WIKI 维基        | [www.cwiki.us](https://www.cwiki.us/)                  | 使用 Confluence 部署的 WIKI 知识库 |
 | DOCS.OSSEZ.COM | [https://docs.ossez.com/#/](https://docs.ossez.com/#/) | 本手册的编译版本将会部署在这个链接上         |
 | CN 博客          | [http://www.cwikius.cn/](http://www.cwikius.cn/)       | CWIKIUS.CN 一个有独立思考和温度的清新站  |
+
+[](prerequisites.md ':include')

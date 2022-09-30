@@ -33,32 +33,32 @@ Using generated security password: 8e557245-73e2-4286-969a-ff57fe326336
 // FIXME: Link to Spring Boot's Security Auto configuration classes
 // FIXME: Add a links for what user's should do next
 
-Spring Boot automatically:
+Spring Boot 自动配置：
 
-* Enables Spring Security's default configuration, which creates a servlet `Filter` as a bean named `springSecurityFilterChain`.
-  This bean is responsible for all the security (protecting the application URLs, validating submitted username and passwords, redirecting to the log in form, and so on) within your application.
-* Creates a `UserDetailsService` bean with a username of `user` and a randomly generated password that is logged to the console.
-* Registers the `Filter` with a bean named `springSecurityFilterChain` with the Servlet container for every request.
+* 在 Spring Boot 中启用 Spring Security 的默认配置。这个配置将会创建一个 servlet `Filter`（过滤器），这个 Bean 被命名为 `springSecurityFilterChain`。
+  这个 Bean 将会在你的应用中负责所有的安全策略，包括但不限于，保护应用 URLs，对提交的用户名和密码进行校验，重定向登录表单等）。
+* 创建一个名为 `UserDetailsService` 的 bean，使用的用户名为  `user`，同时对这个用户生成一个随机的密码，并将这个密码输出到控制台中。
+* 针对每个请求都会调用的一个被命名为 `springSecurityFilterChain` 的 Bean 到 Servlet 容器的 `Filter`中。
 
-Spring Boot is not configuring much, but it does a lot.
-A summary of the features follows:
+Spring Boot 并没有配置很多，但是却做了很多。 
+主要的一些特性如下：
 
-* Require an authenticated user for any interaction with the application
-* Generate a default login form for you
-* Let the user with a username of `user` and a password that is logged to the console to authenticate with form-based authentication (in the preceding example, the password is `8e557245-73e2-4286-969a-ff57fe326336`)
-* Protects the password storage with BCrypt
-* Lets the user log out
-* https://en.wikipedia.org/wiki/Cross-site_request_forgery[CSRF attack] prevention
-* https://en.wikipedia.org/wiki/Session_fixation[Session Fixation] protection
-* Security Header integration
-  ** https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security[HTTP Strict Transport Security] for secure requests
-  ** https://msdn.microsoft.com/en-us/library/ie/gg622941(v=vs.85).aspx[X-Content-Type-Options] integration
-  ** Cache Control (can be overridden later by your application to allow caching of your static resources)
-  ** https://msdn.microsoft.com/en-us/library/dd565647(v=vs.85).aspx[X-XSS-Protection] integration
-  ** X-Frame-Options integration to help prevent https://en.wikipedia.org/wiki/Clickjacking[Clickjacking]
-* Integrate with the following Servlet API methods:
-  ** https://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html#getRemoteUser()[`HttpServletRequest#getRemoteUser()`]
-** https://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html#getUserPrincipal()[`HttpServletRequest.html#getUserPrincipal()`]
-** https://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html#isUserInRole(java.lang.String)[`HttpServletRequest.html#isUserInRole(java.lang.String)`]
-** https://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html#login(java.lang.String,%20java.lang.String)[`HttpServletRequest.html#login(java.lang.String, java.lang.String)`]
-  ** https://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html#logout()[`HttpServletRequest.html#logout()`]
+* 对所有需要使用的系统用户先进行授权
+* 为你创建一个默认的登录表单
+* 让用户可以使用 `user` 用户名和在控制台中打印的密码进行登录（在这个示例中，密码为 `8e557245-73e2-4286-969a-ff57fe326336`）
+* 使用 BCrypt 算法对存储的密码进行保护
+* 让用户可以注销登录
+* 阻止 [CSRF 攻击](https://en.wikipedia.org/wiki/Cross-site_request_forgery)
+* [固定会话（Session Fixation）](https://en.wikipedia.org/wiki/Session_fixation) 保护
+* Header 的安全整合 
+  * 针对安全请求，使用[HTTP Strict Transport Security](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security)
+  * 集成[X-Content-Type-Options](https://msdn.microsoft.com/en-us/library/ie/gg622941(v=vs.85).aspx)
+  * 缓存控制（可以在你的应用程序中对这个进行重写，以允许缓存你的静态资源） 
+  * 集成[X-XSS-Protection](https://msdn.microsoft.com/en-us/library/dd565647(v=vs.85).aspx)
+  * 集成 X-Frame-Options 来防止点击劫持 [Clickjacking](help prevent https://en.wikipedia.org/wiki/Clickjacking)
+* 集成以下的 Servlet API 方法
+  * [`HttpServletRequest#getRemoteUser()`](https://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html#getRemoteUser())
+  * [`HttpServletRequest.html#getUserPrincipal()`](https://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html#getUserPrincipal())
+  * [`HttpServletRequest.html#isUserInRole(java.lang.String)`](https://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html#isUserInRole(java.lang.String))
+  * [`HttpServletRequest.html#login(java.lang.String, java.lang.String)`](https://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html#login(java.lang.String,%20java.lang.String))
+  * [`HttpServletRequest.html#logout()`](https://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html#logout())

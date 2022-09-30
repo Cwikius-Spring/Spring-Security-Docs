@@ -1,36 +1,15 @@
-[[getting-started]]
-= Getting Started with WebFlux Applications
+# Hello Spring Security
 
-This section covers the minimum setup for how to use Spring Security with Spring Boot in a reactive application.
+本节介绍了如何把 Spring Security 与 Spring Boot 结合使用的最小设置。
 
-[NOTE]
-====
-The completed application can be found {gh-samples-url}/reactive/webflux/java/hello-security[in our samples repository].
-For your convenience, you can download a minimal Reactive Spring Boot + Spring Security application by https://start.spring.io/starter.zip?type=maven-project&language=java&packaging=jar&jvmVersion=1.8&groupId=example&artifactId=hello-security&name=hello-security&description=Hello%20Security&packageName=example.hello-security&dependencies=webflux,security[clicking here].
-====
+?> The completed application can be found {gh-samples-url}/servlet/spring-boot/java/hello-security[in our samples repository].
+For your convenience, you can download a minimal Spring Boot + Spring Security application by https://start.spring.io/starter.zip?type=maven-project&language=java&packaging=jar&jvmVersion=1.8&groupId=example&artifactId=hello-security&name=hello-security&description=Hello%20Security&packageName=example.hello-security&dependencies=web,security[clicking here].
 
-[[dependencies]]
-== Updating Dependencies
 
-You can add Spring Security to your Spring Boot project by adding `spring-boot-starter-security`.
+[[servlet-hello-dependencies]]
+## 更新依赖
 
-====
-.Maven
-[source,xml,role="primary"]
-----
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-security</artifactId>
-</dependency>
-----
-
-.Gradle
-[source,groovy,role="secondary"]
-----
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-----
-====
-
+The only step you need to do is update the dependencies by using xref:getting-spring-security.adoc#getting-maven-boot[Maven] or xref:getting-spring-security.adoc#getting-gradle-boot[Gradle].
 
 [[servlet-hello-starting]]
 == Starting Hello Spring Security Boot
@@ -39,24 +18,10 @@ You can now https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle
 The following example shows how to do so (and the beginning of the output from doing so):
 
 .Running Spring Boot Application
-
 ====
-.Maven
-[source,bash,role="primary"]
+[source,bash]
 ----
-$ ./mvnw spring-boot:run
-...
-INFO 23689 --- [  restartedMain] .s.s.UserDetailsServiceAutoConfiguration :
-
-Using generated security password: 8e557245-73e2-4286-969a-ff57fe326336
-
-...
-----
-
-.Gradle
-[source,bash,role="secondary"]
-----
-$ ./gradlew bootRun
+$ ./mvn spring-boot:run
 ...
 INFO 23689 --- [  restartedMain] .s.s.UserDetailsServiceAutoConfiguration :
 
@@ -66,14 +31,40 @@ Using generated security password: 8e557245-73e2-4286-969a-ff57fe326336
 ----
 ====
 
-[[authenticating]]
-== Authenticating
 
-You can access the application at http://localhost:8080/ which will redirect the browser to the default log in page. You can provide the default username of `user` with the randomly generated password that is logged to the console. The browser is then taken to the orginally requested page.
-
-To log out you can visit http://localhost:8080/logout and then confirming you wish to log out.
-
-[[auto-configuration]]
+[[servlet-hello-auto-configuration]]
 == Spring Boot Auto Configuration
 
-Spring Boot automatically adds Spring Security which requires all requests be authenticated. It also generates a user with a randomly generated password that is logged to the console which can be used to authenticate using form or basic authentication.
+// FIXME: Link to relevant portions of documentation
+// FIXME: Link to Spring Boot's Security Auto configuration classes
+// FIXME: Add a links for what user's should do next
+
+Spring Boot automatically:
+
+* Enables Spring Security's default configuration, which creates a servlet `Filter` as a bean named `springSecurityFilterChain`.
+  This bean is responsible for all the security (protecting the application URLs, validating submitted username and passwords, redirecting to the log in form, and so on) within your application.
+* Creates a `UserDetailsService` bean with a username of `user` and a randomly generated password that is logged to the console.
+* Registers the `Filter` with a bean named `springSecurityFilterChain` with the Servlet container for every request.
+
+Spring Boot is not configuring much, but it does a lot.
+A summary of the features follows:
+
+* Require an authenticated user for any interaction with the application
+* Generate a default login form for you
+* Let the user with a username of `user` and a password that is logged to the console to authenticate with form-based authentication (in the preceding example, the password is `8e557245-73e2-4286-969a-ff57fe326336`)
+* Protects the password storage with BCrypt
+* Lets the user log out
+* https://en.wikipedia.org/wiki/Cross-site_request_forgery[CSRF attack] prevention
+* https://en.wikipedia.org/wiki/Session_fixation[Session Fixation] protection
+* Security Header integration
+  ** https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security[HTTP Strict Transport Security] for secure requests
+  ** https://msdn.microsoft.com/en-us/library/ie/gg622941(v=vs.85).aspx[X-Content-Type-Options] integration
+  ** Cache Control (can be overridden later by your application to allow caching of your static resources)
+  ** https://msdn.microsoft.com/en-us/library/dd565647(v=vs.85).aspx[X-XSS-Protection] integration
+  ** X-Frame-Options integration to help prevent https://en.wikipedia.org/wiki/Clickjacking[Clickjacking]
+* Integrate with the following Servlet API methods:
+  ** https://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html#getRemoteUser()[`HttpServletRequest#getRemoteUser()`]
+** https://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html#getUserPrincipal()[`HttpServletRequest.html#getUserPrincipal()`]
+** https://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html#isUserInRole(java.lang.String)[`HttpServletRequest.html#isUserInRole(java.lang.String)`]
+** https://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html#login(java.lang.String,%20java.lang.String)[`HttpServletRequest.html#login(java.lang.String, java.lang.String)`]
+  ** https://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html#logout()[`HttpServletRequest.html#logout()`]

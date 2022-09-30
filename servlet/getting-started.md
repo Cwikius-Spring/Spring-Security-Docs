@@ -25,6 +25,8 @@ INFO 23689 --- [  restartedMain] .s.s.UserDetailsServiceAutoConfiguration :
 Using generated security password: 8e557245-73e2-4286-969a-ff57fe326336
 ```
 
+?> 有关这个项目的运行，请参考页面：https://www.ossez.com/t/hello-spring-security-boot/14119 中的内容。
+
 ## Spring Boot 自动配置
 
 // FIXME: Link to relevant portions of documentation
